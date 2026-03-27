@@ -7290,8 +7290,6 @@ with pkgs;
 
   pth = if stdenv.hostPlatform.isMusl then npth else gnupth;
 
-  pyotherside = libsForQt5.callPackage ../development/libraries/pyotherside { };
-
   qbs = libsForQt5.callPackage ../development/tools/build-managers/qbs { };
 
   qdjango = libsForQt5.callPackage ../development/libraries/qdjango { };
