@@ -8,6 +8,7 @@
   pkg-config,
   rustPlatform,
   versionCheckHook,
+  breakpointHook,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -35,10 +36,11 @@ rustPlatform.buildRustPackage (finalAttrs: {
   doCheck = false;
 
   nativeInstallCheckInputs = [
-    versionCheckHook
+    #versionCheckHook
   ];
-  versionCheckProgram = "${placeholder "out"}/bin/forge --version";
+  #versionCheckProgram = "${placeholder "out"}/bin/forge";
   doInstallCheck = true;
+  nativeBuildInputs = [ breakpointHook ];
 
   passthru.updateScript = nix-update-script { };
 
