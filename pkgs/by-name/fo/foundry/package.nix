@@ -37,7 +37,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   nativeInstallCheckInputs = [
     versionCheckHook
   ];
-  versionCheckProgram = "${placeholder "out"}/bin/forge";
+  versionCheckProgram = "${placeholder "out"}/bin/forge --version";
   doInstallCheck = true;
 
   passthru.updateScript = nix-update-script { };
