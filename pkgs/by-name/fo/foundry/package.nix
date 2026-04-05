@@ -12,7 +12,7 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "foundry";
-  version = "1.5.1";
+  version = "v1.6.0-rc1";
 
   src = fetchFromGitHub {
     owner = "foundry-rs";
