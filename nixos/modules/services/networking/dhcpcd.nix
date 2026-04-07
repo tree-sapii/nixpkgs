@@ -218,6 +218,16 @@ in
       '';
     };
 
+    networking.dhcpcd.symlinkConfig = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        Places the config in /etc/ so manually calling dhcpcd can find it.
+      '';
+    };
+
+
+
     networking.dhcpcd.runHook = lib.mkOption {
       type = lib.types.lines;
       default = "";
@@ -329,7 +339,7 @@ in
           ''}";
 
           ExecStart = "@${dhcpcd}/sbin/dhcpcd dhcpcd --quiet ${lib.optionalString cfg.persistent "--persistent"} --config ${dhcpcdConf}";
-          ExecReload = "${dhcpcd}/sbin/dhcpcd --rebind";
+          ExecReload = "${dhcpcd}/sbin/dhcpcd --rebind --config ${dhcpcdConf}";
           Restart = "always";
           AmbientCapabilities = [
             "CAP_NET_ADMIN"
@@ -405,6 +415,7 @@ in
     environment.systemPackages = [ dhcpcd ];
 
     environment.etc."dhcpcd.exit-hook".text = cfg.runHook;
+    environment.etc."dhcpcd.conf".text = lib.readFile dhcpcdConf;
 
     powerManagement.resumeCommands = lib.mkIf config.systemd.services.dhcpcd.enable ''
       # Tell dhcpcd to rebind its interfaces if it's running.
